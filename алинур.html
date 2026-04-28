@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Алинур & Санем</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    overflow-x: hidden;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    padding-top: 60px;
+}
+
+h1 {
+    font-size: 55px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 30px #ffdde1; }
+}
+
+.heart {
+    display: inline-block;
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    40% { transform: scale(1); }
+}
+
+.card {
+    margin: 25px auto;
+    padding: 20px;
+    width: 320px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1.5s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.card:nth-child(1){ animation-delay: 0.2s; }
+.card:nth-child(2){ animation-delay: 0.4s; }
+.card:nth-child(3){ animation-delay: 0.6s; }
+.card:nth-child(4){ animation-delay: 0.8s; }
+.card:nth-child(5){ animation-delay: 1s; }
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#timer {
+    font-size: 26px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* кнопка */
+button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    color: #ff6b81;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #ffe0e6;
+}
+
+/* летающие сердца */
+.heart-float {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>
+        Алинур <span class="heart">❤️</span> Санем
+    </h1>
+
+    <div class="card">
+        <h2>Мы женимся!</h2>
+        <p>15 июня 2026</p>
+        <p>г. Бишкек</p>
+    </div>
+
+    <div class="card">
+        <h3>До свадьбы осталось:</h3>
+        <div id="timer"></div>
+    </div>
+
+    <div class="card">
+        <h3>Друзья 🤵👰</h3>
+        <p>Эржан</p>
+        <p>Раяна</p>
+    </div>
+
+    <div class="card">
+        <p>Будем рады видеть вас ❤️</p>
+        <button onclick="alert('Спасибо! 💖')">Я приду</button>
+    </div>
+</div>
+
+<script>
+// Таймер с секундами
+const weddingDate = new Date("June 15, 2026 18:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerHTML =
+        days + " д " + hours + " ч " + minutes + " м " + seconds + " с";
+}, 1000);
+
+// сердечки
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart-float";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+}, 400);
+</script>
+
+</body>
+</html>
